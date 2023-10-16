@@ -10,24 +10,25 @@
         <input type="text" [(ngModel)]="firstname" class="bg-transparent border-b-2 border-gray-300 py-2" >
     </li>
        <li class="p-3 px-5">
-      <label for="firstname" >Lastname</label>
+      <label for="lastname" >Lastname</label>
         <input type="text" [(ngModel)]="lastname" class="bg-transparent border-b-2 border-gray-300 py-2" >
     </li>
        <li class="p-3 px-5">
-      <label for="firstname" >Email </label>
+      <label for="email" >Email </label>
         <input type="email" [(ngModel)]="email" class="bg-transparent border-b-2 border-gray-300 py-2" >
     </li>
-       <li class="p-3 px-5">
-      <label for="firstname" >Company </label>
+    <li class="p-3 px-5">
+      <label for="company" >Company </label>
         <select [(ngModel)]="company" class="bg-transparent border-b-2 border-gray-300 py-2" >
-          <option *ngFor="let company of companiesList" [value]="company.name">{{company.name}}</option>
+          <option *ngFor="let company of companiesList" [value]="company">{{company.name}}</option>
         </select>
     </li>
        <li class="p-3 px-5">
-      <label for="firstname" >Role </label>
+      <label for="role" >Role </label>
         <select [(ngModel)]="role" class="bg-transparent border-b-2 border-gray-300 py-2" >
           <option *ngFor="let role of roles" [value]="role">{{role}}</option>
         </select>
     </li>
   </ul>
+   <button type="button" class="mt-2 py-2 px-2 font-medium text-white bg-green-500 rounded hover:bg-green-400 transition duration-300" (click)="createUser()">Salva</button>
  </div>

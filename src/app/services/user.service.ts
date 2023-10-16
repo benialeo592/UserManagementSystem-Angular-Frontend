@@ -30,7 +30,7 @@ export class UserService {
       firstname: 'Bello',
       lastname: 'Verdi',
       email: 'belloverdi76@gmail.com',
-      company: this.service.getCompaniesById(3),
+      company: this.service.getCompaniesById(2),
       role: Role.USER,
     },
   ];
@@ -38,5 +38,9 @@ export class UserService {
   constructor(private service: CompanyService) {}
   getUsers() {
     return this.users;
+  }
+
+  storeUser(user:User){
+    return this.users.push(user);
   }
 }
