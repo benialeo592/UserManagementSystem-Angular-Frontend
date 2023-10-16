@@ -4,6 +4,7 @@ import { Role } from '../models/role';
 import { CompanyService } from '../services/company.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
+import { ActivatedRoute, Route } from '@angular/router';
 
 @Component({
   selector: 'app-user-form',
@@ -22,12 +23,20 @@ export class UserFormComponent implements OnInit {
 
   constructor(
     private companyService: CompanyService,
-    private userService: UserService
+    private userService: UserService,
+    private activatedRoute: ActivatedRoute
+
   ) {}
 
   ngOnInit(): void {
     this.companiesList = this.companyService.getCompanies();
     this.roles.push(Role.ADMIN, Role.USER);
+    let isEdit = this.activatedRoute.snapshot.paramMap.get('id');
+    if(isEdit){
+      //
+    }else{
+      //
+    }
   }
 
   createUser() {
