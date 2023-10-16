@@ -41,6 +41,7 @@ export class UserService {
   }
 
   storeUser(user:User){
-    return this.users.push(user);
+    this.users.push(user);
   }
+
 }

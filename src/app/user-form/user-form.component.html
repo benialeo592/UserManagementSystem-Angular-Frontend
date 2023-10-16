@@ -1,34 +1,69 @@
 <div class="text-gray-900 bg-gray-200">
-    <div class="p-4 flex">
-        <h1 class="text-3xl">New User</h1>
-    </div>
+  <div class="p-4 flex">
+    <h1 class="text-3xl">New User</h1>
+  </div>
 </div>
- <div class="px-3 py-4 max-w-6xl mx-auto px-4">
-  <ul class="border-b hover:bg-green-100 bg-gray-100">
-    <li class="p-3 px-5">
-      <label for="firstname" >Firstname </label>
-        <input type="text" [(ngModel)]="firstname" class="bg-transparent border-b-2 border-gray-300 py-2" >
-    </li>
-       <li class="p-3 px-5">
-      <label for="lastname" >Lastname</label>
-        <input type="text" [(ngModel)]="lastname" class="bg-transparent border-b-2 border-gray-300 py-2" >
-    </li>
-       <li class="p-3 px-5">
-      <label for="email" >Email </label>
-        <input type="email" [(ngModel)]="email" class="bg-transparent border-b-2 border-gray-300 py-2" >
-    </li>
-    <li class="p-3 px-5">
-      <label for="company" >Company </label>
-        <select [(ngModel)]="company" class="bg-transparent border-b-2 border-gray-300 py-2" >
-          <option *ngFor="let company of companiesList" [value]="company">{{company.name}}</option>
+<div class="px-3 py-4 max-w-6xl mx-auto px-4">
+  <div class="border-b hover:bg-green-100 bg-gray-100">
+    <ul>
+      <li class="p-3 px-5">
+        <label for="firstname">Firstname </label>
+        <input
+          type="text"
+          [(ngModel)]="firstname"
+          class="bg-transparent border-b-2 border-gray-300 py-2"
+        />
+      </li>
+      <li class="p-3 px-5">
+        <label for="lastname">Lastname</label>
+        <input
+          type="text"
+          [(ngModel)]="lastname"
+          class="bg-transparent border-b-2 border-gray-300 py-2"
+        />
+      </li>
+      <li class="p-3 px-5">
+        <label for="email">Email </label>
+        <input
+          type="email"
+          [(ngModel)]="email"
+          class="bg-transparent border-b-2 border-gray-300 py-2"
+        />
+      </li>
+      <li class="p-3 px-5">
+        <label for="company">Company </label>
+        <select
+          [(ngModel)]="company"
+          class="bg-transparent border-b-2 border-gray-300 py-2"
+        >
+          <option *ngFor="let company of companiesList" [ngValue]="company">
+            {{ company.name }}
+          </option>
         </select>
-    </li>
-       <li class="p-3 px-5">
-      <label for="role" >Role </label>
-        <select [(ngModel)]="role" class="bg-transparent border-b-2 border-gray-300 py-2" >
-          <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+      </li>
+      <li class="p-3 px-5">
+        <label for="role">Role </label>
+        <select
+          [(ngModel)]="role"
+          class="bg-transparent border-b-2 border-gray-300 py-2"
+        >
+          <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
         </select>
-    </li>
-  </ul>
-   <button type="button" class="mt-2 py-2 px-2 font-medium text-white bg-green-500 rounded hover:bg-green-400 transition duration-300" (click)="createUser()">Salva</button>
- </div>
+      </li>
+    </ul>
+    <button
+      type="button"
+      class="my-2 mx-2 py-2 px-2 font-medium text-white bg-green-500 rounded hover:bg-green-400 transition duration-300"
+      (click)="createUser()"
+    >
+      Salva
+    </button>
+     <button
+      type="button"
+      class="my-2 mx-2 py-2 px-2 font-medium text-white bg-green-500 rounded hover:bg-green-400 transition duration-300"
+      (click)="resetForm()"
+    >
+      Reset
+    </button>
+  </div>
+</div>
