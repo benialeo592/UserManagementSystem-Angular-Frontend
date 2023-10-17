@@ -17,37 +17,50 @@ export class UserFormComponent implements OnInit {
   companiesList: Array<Company> = [];
   roles: Array<Role> = [];
 
+  private userCopy!: User;
+
   constructor(
     private companyService: CompanyService,
     private userService: UserService,
     private activatedRoute: ActivatedRoute
-
   ) {}
 
   ngOnInit(): void {
     this.companiesList = this.companyService.getCompanies();
     this.roles.push(Role.ADMIN, Role.USER);
     let isEdit = this.activatedRoute.snapshot.paramMap.get('id');
-    if(isEdit){
+    if (isEdit) {
       const retrievedUser = this.userService.getUserById(parseInt(isEdit));
-      retrievedUser ? this.user = retrievedUser : this.user = new User(0, "", "", "", this.companiesList[0], Role.USER);
-    }else{
+      retrievedUser
+        ? (this.user = retrievedUser)
+        : (this.user = new User(
+            0,
+            '',
+            '',
+            '',
+            this.companiesList[0],
+            Role.USER
+          ));
+    } else {
       this.user = new User(0, '', '', '', this.companiesList[0], Role.USER);
     }
-
+    this.userCopy = Object.assign({}, this.user);
   }
   saveUser() {
-    if(this.user.id === 0){
+    if (this.user.id === 0) {
       this.userService.storeUser(this.user);
-    }else{
+    } else {
       this.userService.updateUser(this.user);
     }
   }
 
-  resetForm(){
-    //
+  resetForm() {
+    if (this.userCopy.id === 0) {
+      this.user = new User(0, '', '', '', this.companiesList[0], Role.USER);
+    } else {
+      this.user = Object.assign({}, this.userCopy);
+    }
   }
-
 
 
 }

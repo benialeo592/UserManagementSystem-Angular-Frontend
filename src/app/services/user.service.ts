@@ -57,4 +57,9 @@ export class UserService {
     }
   }
 
+  destroyUser(id: number){
+    let index = this.users.findIndex((u) => u.id === id);
+    this.users.splice(index, 1);
+  }
+
 }

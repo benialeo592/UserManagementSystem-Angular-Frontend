@@ -10,9 +10,13 @@ import { Router } from '@angular/router';
 })
 export class UsersComponent implements OnInit {
   users: Array<User> = [];
-  constructor(private service: UserService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.users = this.service.getUsers();
+    this.users = this.userService.getUsers();
+  }
+
+  deleteUser(id: number) {
+    this.userService.destroyUser(id);
   }
 }
