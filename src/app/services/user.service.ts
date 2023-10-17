@@ -3,6 +3,7 @@ import { User } from '../models/user';
 import { Company } from '../models/company';
 import { Role } from '../models/role';
 import { CompanyService } from './company.service';
+import { filter } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +42,19 @@ export class UserService {
   }
 
   storeUser(user:User){
+    user.id = this.users.length +1;
     this.users.push(user);
+  }
+
+  getUserById(id:number):User | undefined{
+    return this.users.find(user=>user.id===id);
+  }
+
+  updateUser(user:User){
+    let index = this.users.findIndex((u) => u.id === user.id);
+    if(index){
+      this.users[index] = user;
+    }
   }
 
 }

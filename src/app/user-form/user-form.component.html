@@ -10,7 +10,7 @@
         <label for="firstname">Firstname </label>
         <input
           type="text"
-          [(ngModel)]="firstname"
+          [(ngModel)]="user.firstname"
           class="bg-transparent border-b-2 border-gray-300 py-2"
         />
       </li>
@@ -18,7 +18,7 @@
         <label for="lastname">Lastname</label>
         <input
           type="text"
-          [(ngModel)]="lastname"
+          [(ngModel)]="user.lastname"
           class="bg-transparent border-b-2 border-gray-300 py-2"
         />
       </li>
@@ -26,14 +26,14 @@
         <label for="email">Email </label>
         <input
           type="email"
-          [(ngModel)]="email"
+          [(ngModel)]="user.email"
           class="bg-transparent border-b-2 border-gray-300 py-2"
         />
       </li>
       <li class="p-3 px-5">
         <label for="company">Company </label>
         <select
-          [(ngModel)]="company"
+          [(ngModel)]="user.company"
           class="bg-transparent border-b-2 border-gray-300 py-2"
         >
           <option *ngFor="let company of companiesList" [ngValue]="company">
@@ -44,7 +44,7 @@
       <li class="p-3 px-5">
         <label for="role">Role </label>
         <select
-          [(ngModel)]="role"
+          [(ngModel)]="user.role"
           class="bg-transparent border-b-2 border-gray-300 py-2"
         >
           <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
@@ -54,14 +54,14 @@
     <button
       type="button"
       class="my-2 mx-2 py-2 px-2 font-medium text-white bg-green-500 rounded hover:bg-green-400 transition duration-300"
-      (click)="createUser()"
+      (click)="saveUser()"
     >
       Salva
     </button>
      <button
       type="button"
       class="my-2 mx-2 py-2 px-2 font-medium text-white bg-green-500 rounded hover:bg-green-400 transition duration-300"
-      (click)="resetForm()"
+      (click)="saveUser()"
     >
       Reset
     </button>

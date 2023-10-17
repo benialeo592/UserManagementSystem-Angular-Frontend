@@ -12,11 +12,7 @@ import { ActivatedRoute, Route } from '@angular/router';
   styleUrls: ['./user-form.component.css'],
 })
 export class UserFormComponent implements OnInit {
-  firstname: String = '';
-  lastname: String = '';
-  email: String = '';
-  company!: Company;
-  role!: Role;
+  user!: User;
 
   companiesList: Array<Company> = [];
   roles: Array<Role> = [];
@@ -33,32 +29,25 @@ export class UserFormComponent implements OnInit {
     this.roles.push(Role.ADMIN, Role.USER);
     let isEdit = this.activatedRoute.snapshot.paramMap.get('id');
     if(isEdit){
-      //
+      const retrievedUser = this.userService.getUserById(parseInt(isEdit));
+      retrievedUser ? this.user = retrievedUser : this.user = new User(0, "", "", "", this.companiesList[0], Role.USER);
     }else{
-      //
+      this.user = new User(0, '', '', '', this.companiesList[0], Role.USER);
+    }
+
+  }
+  saveUser() {
+    if(this.user.id === 0){
+      this.userService.storeUser(this.user);
+    }else{
+      this.userService.updateUser(this.user);
     }
   }
 
-  createUser() {
-    this.userService.storeUser(
-      new User(
-        3,
-        this.firstname,
-        this.lastname,
-        this.email,
-        this.company,
-        this.role
-      )
-    );
+  resetForm(){
+    //
   }
-  resetForm() {
-    this.firstname = "";
-    this.lastname = "";
-    this.email = "";
-    this.company = {
-      id: 0,
-      name: "",
-      address: "",
-    }
-  }
+
+
+
 }
