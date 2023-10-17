@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -13,10 +12,23 @@ export class UsersComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.users = this.userService.getUsers();
+    this.userService.getUsers().subscribe(
+      (users) => this.users = users,
+      (error) => console.error('Error fetching companies:', error)
+    );
+
   }
 
   deleteUser(id: number) {
-    this.userService.destroyUser(id);
+    this.userService.destroyUser(id).subscribe(
+      (message) => {
+        console.log(message)
+        this.userService.getUsers().subscribe(
+          (users) => (this.users = users),
+          (error) => console.error('Error fetching companies:', error)
+        );
+      },
+      (error) => console.error('Error fetching companies:', error)
+    );
   }
 }

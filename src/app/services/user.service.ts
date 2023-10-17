@@ -1,65 +1,37 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
-import { Company } from '../models/company';
-import { Role } from '../models/role';
 import { CompanyService } from './company.service';
-import { filter } from 'rxjs';
+import { Observable, filter } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private users: Array<User> = [
-    {
-      id: 1,
-      firstname: 'Beniamino',
-      lastname: 'Leone',
-      email: 'benialeo592@gmail.com',
-      company: this.service.getCompaniesById(1),
-      role: Role.USER,
-    },
-    {
-      id: 2,
-      firstname: 'Giammarco',
-      lastname: 'Rossi',
-      email: 'giammarcorossi49@gmail.com',
-      company: this.service.getCompaniesById(2),
-      role: Role.USER,
-    },
-    {
-      id: 3,
-      firstname: 'Bello',
-      lastname: 'Verdi',
-      email: 'belloverdi76@gmail.com',
-      company: this.service.getCompaniesById(2),
-      role: Role.USER,
-    },
-  ];
+  private users: Array<User> = [];
+  private apiUrl = 'http://localhost:8080/api/v1/users';
 
-  constructor(private service: CompanyService) {}
-  getUsers() {
-    return this.users;
+  constructor(
+    private service: CompanyService,
+    private httpClient: HttpClient
+  ) {}
+  getUsers(): Observable<Array<User>> {
+    return this.httpClient.get<Array<User>>(this.apiUrl);
   }
 
-  storeUser(user:User){
-    user.id = this.users.length +1;
-    this.users.push(user);
+  storeUser(user: User): Observable<User> {
+    return this.httpClient.post<User>(this.apiUrl + '/create', user);
   }
 
-  getUserById(id:number):User | undefined{
-    return this.users.find(user=>user.id===id);
+  getUserById(id: number): Observable<User> {
+    return this.httpClient.get<User>(this.apiUrl + '/' + id);
   }
 
-  updateUser(user:User){
-    let index = this.users.findIndex((u) => u.id === user.id);
-    if(index){
-      this.users[index] = user;
-    }
+  updateUser(user: User): Observable<User> {
+    return this.httpClient.put<User>(this.apiUrl + '/edit/' + user.id, user);
   }
 
-  destroyUser(id: number){
-    let index = this.users.findIndex((u) => u.id === id);
-    this.users.splice(index, 1);
+  destroyUser(id: number): Observable<String> {
+    return this.httpClient.delete<String>(this.apiUrl + '/destroy/' + id);
   }
-
 }

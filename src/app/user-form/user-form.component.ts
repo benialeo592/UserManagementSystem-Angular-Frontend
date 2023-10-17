@@ -4,7 +4,7 @@ import { Role } from '../models/role';
 import { CompanyService } from '../services/company.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-form',
@@ -22,45 +22,53 @@ export class UserFormComponent implements OnInit {
   constructor(
     private companyService: CompanyService,
     private userService: UserService,
-    private activatedRoute: ActivatedRoute
-  ) {}
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {
+    this.user = new User(0, '', '', '', this.companiesList[0], Role.USER);
+  }
 
   ngOnInit(): void {
-    this.companiesList = this.companyService.getCompanies();
+
+    this.companyService.getCompanies().subscribe(
+      (company) => (this.companiesList = company),
+      (error) => console.error('Error fetching companies:', error)
+    );
     this.roles.push(Role.ADMIN, Role.USER);
     let isEdit = this.activatedRoute.snapshot.paramMap.get('id');
     if (isEdit) {
-      const retrievedUser = this.userService.getUserById(parseInt(isEdit));
-      retrievedUser
-        ? (this.user = retrievedUser)
-        : (this.user = new User(
-            0,
-            '',
-            '',
-            '',
-            this.companiesList[0],
-            Role.USER
-          ));
-    } else {
-      this.user = new User(0, '', '', '', this.companiesList[0], Role.USER);
+      this.userService.getUserById(parseInt(isEdit)).subscribe(
+        (success) => {
+          this.user = success;
+          this.userCopy = Object.assign({}, this.user);
+        },
+        (error) => console.error('Error fetching companies:', error)
+      );
     }
-    this.userCopy = Object.assign({}, this.user);
+
   }
   saveUser() {
     if (this.user.id === 0) {
-      this.userService.storeUser(this.user);
+      this.userService.storeUser(this.user).subscribe(
+        (user) => console.log(user),
+        (error) => console.error('Error fetching companies:', error),
+        () => this.resetForm()
+      );
     } else {
-      this.userService.updateUser(this.user);
+      this.userService.updateUser(this.user).subscribe(
+        (user) => console.log(user),
+        (error) => console.error('Error fetching companies:', error),
+        () => this.router.navigate(['/users'])
+      );
     }
+
   }
 
   resetForm() {
-    if (this.userCopy.id === 0) {
+    if (this.userCopy === undefined) {
       this.user = new User(0, '', '', '', this.companiesList[0], Role.USER);
     } else {
       this.user = Object.assign({}, this.userCopy);
     }
   }
-
-
 }
